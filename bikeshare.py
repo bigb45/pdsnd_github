@@ -65,7 +65,11 @@ def station_information(df):
 # UTILITY FUNCTIONS
 
 def get_closest_match(city):
+    """
+    function used to get the closest match to the city the user entered ignores misspellings and spacings, uses a simple matching algorithm
 
+    param: city - the city the user entered
+    return: the closest match to the city the user entered"""
     city_match = {'new york city': 0, 'washington': 0, 'chicago': 0}
     ny = 'new york city'
     wa = 'washington'
@@ -84,7 +88,14 @@ def get_closest_match(city):
 
 
 def prompt_user(prompt, choices, aliases=[]):
+    """
+    function used to ask the user a question, and provide a list of choices to pick from and a list of aliases that the user can also answer from
+    param: prompt - the question to ask the user
+    param: choices - a list of choices to pick from
+    param: aliases - a list of aliases that the user can also answer from
+    return: the user's answer
 
+    """
     while True:
         print(prompt, "answer with", choices)
         ans = input().lower().strip()
@@ -97,21 +108,34 @@ def prompt_user(prompt, choices, aliases=[]):
 
 
 def format_time(col_name, new_col_name, df, pattern):
-
+    """function to format the time in the dataframe to the specified pattern
+    param: col_name - the name of the column to format
+    param: new_col_name - the name of the new column to create
+    param: df - the dataframe to format
+    param: pattern - the pattern to format the time to"""
     df[new_col_name] = pd.to_datetime(
         df[col_name]).dt.time.map(lambda t: t.strftime(pattern))
     return df[new_col_name]
 
 
 def format_date(col_name, new_col_name, df, pattern):
-
+    """
+    function to format the date in the dataframe to the specified pattern
+    param: col_name - the name of the column to format
+    param: new_col_name - the name of the new column to create
+    param: df - the dataframe to format
+    param: pattern - the pattern to format the date to
+    """
     df[new_col_name] = pd.to_datetime(
         df[col_name]).dt.date.map(lambda t: t.strftime(pattern))
     return df[new_col_name]
 
 
 def seconds_to_dhm(seconds):
-
+    """
+    function to convert seconds to hours and minutes
+    param: seconds - the number of seconds to convert
+    return: the number of hours and minutes"""
     days = seconds // 86400
     hours = (seconds % 86400) // 3600
     minutes = (seconds % 86400) // 60
@@ -119,6 +143,12 @@ def seconds_to_dhm(seconds):
 
 
 def filter_data(df, month_list, day_list):
+    """
+    filterdata function to filter the data by month and day
+    param: df - the dataframe to filter
+    param: month_list - the list of months to filter by
+    param: day_list - the list of days to filter by
+    return: the filtered dataframe"""
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     df['Month'] = df['Start Time'].dt.month
     df['Weekday'] = df['Start Time'].dt.day_name()
@@ -131,7 +161,9 @@ def filter_data(df, month_list, day_list):
 
 
 def get_filters():
-
+    """
+    function to get the filters from the user by which the data will be restricted
+    return: the filters the user entered"""
     month_filter = day_filter = 0
     input_error = False
     while 1:
@@ -163,7 +195,10 @@ def get_filters():
 
 
 def load_city_data(city, month, day):
-
+    """function to load the city data from the csv file and filter it according to the user's input
+    param: city - the city the user entered
+    param: month - the month the user entered
+    param: day -the day the user entered"""
     # try:
     print("loading data for {} filtering by {}, {}".format(city, month, day))
 
@@ -184,7 +219,11 @@ def load_city_data(city, month, day):
 
 
 def get_city(city):
+    """
+    function to get the city from the user, and check if the city is valid and if not, provide a suggestion
 
+    param: city - the city the user entered
+    return: the city the user entered or the closest match to the city the user entered or None if the city does not match the user's input"""
     ny = 'new york city'
     wa = 'washington'
     chi = 'chicago'
