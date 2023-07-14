@@ -96,20 +96,6 @@ def prompt_user(prompt, choices, aliases=[]):
             print('please provide an answer from the given list')
 
 
-def format_time(col_name, new_col_name, df, pattern):
-
-    df[new_col_name] = pd.to_datetime(
-        df[col_name]).dt.time.map(lambda t: t.strftime(pattern))
-    return df[new_col_name]
-
-
-def format_date(col_name, new_col_name, df, pattern):
-
-    df[new_col_name] = pd.to_datetime(
-        df[col_name]).dt.date.map(lambda t: t.strftime(pattern))
-    return df[new_col_name]
-
-
 def seconds_to_dhm(seconds):
 
     days = seconds // 86400
