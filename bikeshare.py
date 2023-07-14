@@ -12,12 +12,6 @@ weekdays = ['monday', 'tuesday', 'wednesday',
 months = ['january', 'february', 'march', 'april', 'may', 'june', 'july']
 
 
-
-
-
-
-
-
 # UTILITY FUNCTIONS
 
 def get_closest_match(city):
@@ -52,95 +46,6 @@ def prompt_user(prompt, choices, aliases=[]):
             print('please provide an answer from the given list')
 
 
-
-def format_time(col_name, new_col_name, df, pattern):
-
-    df[new_col_name] = pd.to_datetime(
-        df[col_name]).dt.time.map(lambda t: t.strftime(pattern))
-    return df[new_col_name]
-
-
-def format_date(col_name, new_col_name, df, pattern):
-
-    df[new_col_name] = pd.to_datetime(
-        df[col_name]).dt.date.map(lambda t: t.strftime(pattern))
-    return df[new_col_name]
-
-
-def seconds_to_dhm(seconds):
-
-    days = seconds // 86400
-    hours = (seconds % 86400) // 3600
-    minutes = (seconds % 86400) // 60
-    return "{} Hours and {} Minutes".format(hours, minutes)
-
-
-def filter_data(df, month_list, day_list):
-    df['Start Time'] = pd.to_datetime(df['Start Time'])
-    df['Month'] = df['Start Time'].dt.month
-    df['Weekday'] = df['Start Time'].dt.day_name()
-    df = pd.concat(
-        map(lambda month: df[df['Month'] == (months.index(month)+1)], month_list))
-    df = pd.concat(
-        map(lambda day: df[df['Weekday'] == (day.title())], day_list))
-    df = df.sample(frac=1)
-    return df
-
-# statistics functions
-def time_charts(df):
-    df['Hour'] = pd.to_datetime(df['Start Time']).dt.hour
-
-    # Count the occurrences of each hour
-    hour_counts = df['Hour'].value_counts().sort_index()
-
-    print('Hourly Distribution of Trips:')
-    print(hour_counts)
-    print()
-    
-
-
-def user_information(df):
-    user_types = df['User Type'].value_counts()
-    print('User Types:')
-    print(user_types)
-    print()
-
-    # Check if 'Gender' column exists in the DataFrame
-    if 'Gender' in df.columns:
-        gender_counts = df['Gender'].value_counts()
-        print('Gender Distribution:')
-        print(gender_counts)
-        print()
-    
-
-
-def trip_length_information(df):
-    print("the total travel time for the selected filters is {} hours".format(df['Trip Duration'].sum()/3600))
-    print("the maximum travel time for the selected filters is {} hours!".format(df['Trip Duration'].max()/3600))
-    
-
-
-def gender_distribution(df):
-    if 'Gender' in df.columns:
-        gender_counts = df['Gender'].value_counts()
-        print('Gender Distribution:')
-        print(gender_counts)
-        print()
-    else:
-        print('Gender information not available for this dataset.')
-
-    
-
-
-
-def station_information(df):
-    print('the most popular starting station is {}'.format(df['Start Station'].mode()[0]))
-    print('the most popular ending station is {}'.format(df['End Station'].mode()[0]))
-
-
-
-# input functions
-
 def get_filters():
 
     month_filter = day_filter = 0
@@ -173,10 +78,8 @@ def get_filters():
     return day_filter, month_filter
 
 
-
 def load_city_data(city, month, day):
 
-    
     # try:
     print("loading data for {} filtering by {}, {}".format(city, month, day))
 
@@ -187,16 +90,14 @@ def load_city_data(city, month, day):
     # format_date(
     #     'Start Time', 'Date', bikeshare_data, '%d/%m/%Y')
 
-
     # format_time(
     #     'Start Time', 'Start Time', bikeshare_data, '%H:%M')
     # format_time(
     #     'End Time', 'End Time', bikeshare_data, '%H:%M')
-    
 
     return bikeshare_data.fillna('other')
     # .head(row_count), hourly_chart_data, daily_chart_data
-    
+
 
 def get_city(city):
 
@@ -216,7 +117,6 @@ def get_city(city):
             return None
 
 
-
 def main():
     while True:
         count = 5
@@ -225,13 +125,10 @@ def main():
         if city != None:
             days, months = get_filters()
             bikeshare_data = load_city_data(city, months, days)
-            time_charts(bikeshare_data)
-            user_information(bikeshare_data)
-            trip_length_information(bikeshare_data)
-            gender_distribution(bikeshare_data)
-            station_information(bikeshare_data)
+
             while True:
-                ans = prompt_user("would you like to view raw data?", choices=['yes', 'no'])
+                ans = prompt_user(
+                    "would you like to view raw data?", choices=['yes', 'no'])
                 if ans == 'yes':
                     print(bikeshare_data.head(count))
                     count += 5
@@ -239,11 +136,5 @@ def main():
                     break
 
 
-
-
 if __name__ == "__main__":
     main()
-
-
-
-
