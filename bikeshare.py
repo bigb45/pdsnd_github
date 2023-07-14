@@ -14,6 +14,13 @@ months = ['january', 'february', 'march', 'april', 'may', 'june', 'july']
 
 # statistics functions
 def time_charts(df):
+    """
+    Display the hourly distribution of trips.
+
+    Params:
+        df (DataFrame): The bikeshare data.
+
+    """
     df['Hour'] = pd.to_datetime(df['Start Time']).dt.hour
 
     # Count the occurrences of each hour
@@ -25,6 +32,13 @@ def time_charts(df):
 
 
 def user_information(df):
+    """
+    Display the user types and, if available, gender distribution.
+
+    Params:
+        df (DataFrame): The bikeshare data.
+
+    """
     user_types = df['User Type'].value_counts()
     print('User Types:')
     print(user_types)
@@ -39,6 +53,13 @@ def user_information(df):
 
 
 def trip_length_information(df):
+    """
+    Display the total and maximum travel time for the selected filters.
+
+    Params:
+        df (DataFrame): The bikeshare data.
+
+    """
     print("the total travel time for the selected filters is {} hours".format(
         df['Trip Duration'].sum()/3600))
     print("the maximum travel time for the selected filters is {} hours!".format(
@@ -46,6 +67,13 @@ def trip_length_information(df):
 
 
 def gender_distribution(df):
+    """
+    Display the gender distribution if available, otherwise display a message.
+
+    Params:
+        df (DataFrame): The bikeshare data.
+
+    """
     if 'Gender' in df.columns:
         gender_counts = df['Gender'].value_counts()
         print('Gender Distribution:')
@@ -56,6 +84,13 @@ def gender_distribution(df):
 
 
 def station_information(df):
+    """
+    Display the most popular starting and ending stations.
+
+    Params:
+        df (DataFrame): The bikeshare data.
+
+    """
     print('the most popular starting station is {}'.format(
         df['Start Station'].mode()[0]))
     print('the most popular ending station is {}'.format(
