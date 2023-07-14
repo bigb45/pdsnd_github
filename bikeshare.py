@@ -124,11 +124,16 @@ def get_closest_match(city):
 
 def prompt_user(prompt, choices, aliases=[]):
     """
-    function used to ask the user a question, and provide a list of choices to pick from and a list of aliases that the user can also answer from
-    param: prompt - the question to ask the user
-    param: choices - a list of choices to pick from
-    param: aliases - a list of aliases that the user can also answer from
-    return: the user's answer
+    Ask the user a question and provide a list of choices to pick from,
+    along with a list of aliases that the user can also answer from.
+
+    Params:
+        prompt (str): The question to ask the user.
+        choices (list): A list of choices to pick from.
+        aliases (list, optional): A list of aliases for the choices. Defaults to an empty list.
+
+    Returns:
+        str: The user's answer.
 
     """
     while True:
