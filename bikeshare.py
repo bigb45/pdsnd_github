@@ -17,8 +17,8 @@ def time_charts(df):
     """
     Display the hourly distribution of trips.
 
-    Params:
-        df (DataFrame): The bikeshare data.
+    Args:
+        df : The bikeshare data.
 
     """
     df['Hour'] = pd.to_datetime(df['Start Time']).dt.hour
@@ -35,8 +35,8 @@ def user_information(df):
     """
     Display the user types and, if available, gender distribution.
 
-    Params:
-        df (DataFrame): The bikeshare data.
+    Args:
+        df : The bikeshare data.
 
     """
     user_types = df['User Type'].value_counts()
@@ -56,8 +56,8 @@ def trip_length_information(df):
     """
     Display the total and maximum travel time for the selected filters.
 
-    Params:
-        df (DataFrame): The bikeshare data.
+    Args:
+        df : The bikeshare data.
 
     """
     print("the total travel time for the selected filters is {} hours".format(
@@ -70,8 +70,8 @@ def gender_distribution(df):
     """
     Display the gender distribution if available, otherwise display a message.
 
-    Params:
-        df (DataFrame): The bikeshare data.
+    Args:
+        df : The bikeshare data.
 
     """
     if 'Gender' in df.columns:
@@ -87,8 +87,8 @@ def station_information(df):
     """
     Display the most popular starting and ending stations.
 
-    Params:
-        df (DataFrame): The bikeshare data.
+    Args:
+        df : The bikeshare data.
 
     """
     print('the most popular starting station is {}'.format(
