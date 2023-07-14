@@ -170,17 +170,7 @@ def load_city_data(city, month, day):
     bikeshare_data = pd.DataFrame(
         pd.read_csv(CITY_DATA[city])).drop("Unnamed: 0", axis=1)
 
-    # bikeshare_data = filter_data(bikeshare_data, month, day)
-    # format_date(
-    #     'Start Time', 'Date', bikeshare_data, '%d/%m/%Y')
-
-    # format_time(
-    #     'Start Time', 'Start Time', bikeshare_data, '%H:%M')
-    # format_time(
-    #     'End Time', 'End Time', bikeshare_data, '%H:%M')
-
     return bikeshare_data.fillna('other')
-    # .head(row_count), hourly_chart_data, daily_chart_data
 
 
 def get_city(city):
