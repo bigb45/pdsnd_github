@@ -12,6 +12,56 @@ weekdays = ['monday', 'tuesday', 'wednesday',
 months = ['january', 'february', 'march', 'april', 'may', 'june', 'july']
 
 
+# statistics functions
+def time_charts(df):
+    df['Hour'] = pd.to_datetime(df['Start Time']).dt.hour
+
+    # Count the occurrences of each hour
+    hour_counts = df['Hour'].value_counts().sort_index()
+
+    print('Hourly Distribution of Trips:')
+    print(hour_counts)
+    print()
+
+
+def user_information(df):
+    user_types = df['User Type'].value_counts()
+    print('User Types:')
+    print(user_types)
+    print()
+
+    # Check if 'Gender' column exists in the DataFrame
+    if 'Gender' in df.columns:
+        gender_counts = df['Gender'].value_counts()
+        print('Gender Distribution:')
+        print(gender_counts)
+        print()
+
+
+def trip_length_information(df):
+    print("the total travel time for the selected filters is {} hours".format(
+        df['Trip Duration'].sum()/3600))
+    print("the maximum travel time for the selected filters is {} hours!".format(
+        df['Trip Duration'].max()/3600))
+
+
+def gender_distribution(df):
+    if 'Gender' in df.columns:
+        gender_counts = df['Gender'].value_counts()
+        print('Gender Distribution:')
+        print(gender_counts)
+        print()
+    else:
+        print('Gender information not available for this dataset.')
+
+
+def station_information(df):
+    print('the most popular starting station is {}'.format(
+        df['Start Station'].mode()[0]))
+    print('the most popular ending station is {}'.format(
+        df['End Station'].mode()[0]))
+
+
 # UTILITY FUNCTIONS
 
 def get_closest_match(city):
@@ -161,6 +211,11 @@ def main():
             bikeshare_data = load_city_data(city, months, days)
 
             while True:
+                time_charts(bikeshare_data)
+                user_information(bikeshare_data)
+                trip_length_information(bikeshare_data)
+                gender_distribution(bikeshare_data)
+                station_information(bikeshare_data)
                 ans = prompt_user(
                     "would you like to view raw data?", choices=['yes', 'no'])
                 if ans == 'yes':
