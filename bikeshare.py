@@ -14,6 +14,13 @@ months = ['january', 'february', 'march', 'april', 'may', 'june', 'july']
 
 # statistics functions
 def time_charts(df):
+    """
+    Display the hourly distribution of trips.
+
+    Args:
+        df : The bikeshare data.
+
+    """
     df['Hour'] = pd.to_datetime(df['Start Time']).dt.hour
 
     # Count the occurrences of each hour
@@ -25,6 +32,13 @@ def time_charts(df):
 
 
 def user_information(df):
+    """
+    Display the user types and, if available, gender distribution.
+
+    Args:
+        df : The bikeshare data.
+
+    """
     user_types = df['User Type'].value_counts()
     print('User Types:')
     print(user_types)
@@ -39,6 +53,13 @@ def user_information(df):
 
 
 def trip_length_information(df):
+    """
+    Display the total and maximum travel time for the selected filters.
+
+    Args:
+        df : The bikeshare data.
+
+    """
     print("the total travel time for the selected filters is {} hours".format(
         df['Trip Duration'].sum()/3600))
     print("the maximum travel time for the selected filters is {} hours!".format(
@@ -46,6 +67,13 @@ def trip_length_information(df):
 
 
 def gender_distribution(df):
+    """
+    Display the gender distribution if available, otherwise display a message.
+
+    Args:
+        df : The bikeshare data.
+
+    """
     if 'Gender' in df.columns:
         gender_counts = df['Gender'].value_counts()
         print('Gender Distribution:')
@@ -56,6 +84,13 @@ def gender_distribution(df):
 
 
 def station_information(df):
+    """
+    Display the most popular starting and ending stations.
+
+    Args:
+        df : The bikeshare data.
+
+    """
     print('the most popular starting station is {}'.format(
         df['Start Station'].mode()[0]))
     print('the most popular ending station is {}'.format(
@@ -65,7 +100,11 @@ def station_information(df):
 # UTILITY FUNCTIONS
 
 def get_closest_match(city):
+    """
+    function used to get the closest match to the city the user entered ignores misspellings and spacings, uses a simple matching algorithm
 
+    param: city - the city the user entered
+    return: the closest match to the city the user entered"""
     city_match = {'new york city': 0, 'washington': 0, 'chicago': 0}
     ny = 'new york city'
     wa = 'washington'
@@ -84,7 +123,19 @@ def get_closest_match(city):
 
 
 def prompt_user(prompt, choices, aliases=[]):
+    """
+    Ask the user a question and provide a list of choices to pick from,
+    along with a list of aliases that the user can also answer from.
 
+    Params:
+        prompt (str): The question to ask the user.
+        choices (list): A list of choices to pick from.
+        aliases (list, optional): A list of aliases for the choices. Defaults to an empty list.
+
+    Returns:
+        str: The user's answer.
+
+    """
     while True:
         print(prompt, "answer with", choices)
         ans = input().lower().strip()
@@ -97,7 +148,10 @@ def prompt_user(prompt, choices, aliases=[]):
 
 
 def seconds_to_dhm(seconds):
-
+    """
+    function to convert seconds to hours and minutes
+    param: seconds - the number of seconds to convert
+    return: the number of hours and minutes"""
     days = seconds // 86400
     hours = (seconds % 86400) // 3600
     minutes = (seconds % 86400) // 60
@@ -105,6 +159,12 @@ def seconds_to_dhm(seconds):
 
 
 def filter_data(df, month_list, day_list):
+    """
+    filterdata function to filter the data by month and day
+    param: df - the dataframe to filter
+    param: month_list - the list of months to filter by
+    param: day_list - the list of days to filter by
+    return: the filtered dataframe"""
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     df['Month'] = df['Start Time'].dt.month
     df['Weekday'] = df['Start Time'].dt.day_name()
@@ -117,7 +177,9 @@ def filter_data(df, month_list, day_list):
 
 
 def get_filters():
-
+    """
+    function to get the filters from the user by which the data will be restricted
+    return: the filters the user entered"""
     month_filter = day_filter = 0
     input_error = False
     while 1:
@@ -149,7 +211,10 @@ def get_filters():
 
 
 def load_city_data(city, month, day):
-
+    """function to load the city data from the csv file and filter it according to the user's input
+    param: city - the city the user entered
+    param: month - the month the user entered
+    param: day -the day the user entered"""
     # try:
     print("loading data for {} filtering by {}, {}".format(city, month, day))
 
@@ -160,7 +225,11 @@ def load_city_data(city, month, day):
 
 
 def get_city(city):
+    """
+    function to get the city from the user, and check if the city is valid and if not, provide a suggestion
 
+    param: city - the city the user entered
+    return: the city the user entered or the closest match to the city the user entered or None if the city does not match the user's input"""
     ny = 'new york city'
     wa = 'washington'
     chi = 'chicago'
